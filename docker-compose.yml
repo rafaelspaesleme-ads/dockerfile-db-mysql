@@ -5,9 +5,17 @@ services:
   db:
     image: mysql:${VERSION}
     ports:
-      - "${PORT_EX}:3306"
+      - "${PORT_MYSQL}:3306"
     volumes:
       - data:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_PASS}
       - MYSQL_DATABASE=${DB_NAME}
+  app:
+    image: phpmyadmin/phpmyadmin:${VERSION}
+    links:
+      - db
+    ports:
+      - ${PORT_MyADM}:80
+    environment:
+      - PMA_ARBITRARY=${NUMBER_ARBITRARY}
